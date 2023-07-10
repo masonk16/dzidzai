@@ -24,7 +24,7 @@ class Subject(models.Model):
 
 class Course(models.Model):
     """
-    Section of the subject matter.
+    Section of the subject.
     """
 
     owner = models.ForeignKey(
@@ -66,7 +66,10 @@ class Content(models.Model):
     module = models.ForeignKey(
         Module, related_name="contents", on_delete=models.CASCADE
     )
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE,
+                                     limit_choices_to={'model__in': (
+                                         'text', 'video', 'image', 'file'
+                                     )})
     object_id = models.PositiveIntegerField()
     item = GenericForeignKey("content_type", "object_id")
 
@@ -91,27 +94,28 @@ class ItemBase(models.Model):
 
 class Text(ItemBase):
     """
-    Text content management.
+    To store text content.
     """
     content = models.TextField()
 
 
 class File(ItemBase):
     """
-    File content management.
+    To store files such as PDF's.
     """
     file = models.FileField(upload_to="files")
 
 
 class Image(ItemBase):
     """
-    Image content management.
+    To store image files.
     """
     file = models.FileField(upload_to="images")
 
 
 class Video(ItemBase):
     """
-    Video content management.
+    To store video files;
+    URLField to store video URL in order to allow embedding.
     """
     url = models.URLField()
