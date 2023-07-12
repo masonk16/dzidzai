@@ -30,16 +30,38 @@ class OwnerCourseEditMixin(OwnerCourseMixin, OwnerEditMixin):
 
 
 class ManageCourseListView(OwnerCourseMixin, ListView):
+    """
+    Lists the courses created by the user.
+    """
+
     template_name = 'courses/manage/course/list.html'
 
 
 class CourseCreateView(OwnerCourseEditMixin, CreateView):
+    """
+    Uses a model form to create a new Course object.
+    It uses the fields defined in OwnerCourseMixin
+    to build a model form and also subclasses CreateView.
+    It uses the template defined in OwnerCourseEditMixin.
+    """
     pass
 
 
 class CourseUpdateView(OwnerCourseEditMixin, UpdateView):
+    """
+    Allows the editing of an existing Course object.
+    It uses the fields defined in OwnerCourseMixin to
+    build a model form and also subclasses UpdateView.
+    It uses the template defined in OwnerCourseEditMixin.
+    """
     pass
 
 
 class CourseDeleteView(OwnerCourseMixin, DeleteView):
+    """
+    Inherits from OwnerCourseMixin and the generic DeleteView.
+    It defines a specific template_name attribute for a template
+    to confirm the course deletion.
+    """
+
     template_name = 'courses/manage/course/delete.html'
