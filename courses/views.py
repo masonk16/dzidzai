@@ -83,6 +83,9 @@ class CourseModuleUpdateView(TemplateResponseMixin, View):
     course = None
 
     def get_formset(self, data=None):
+        """
+        Helper method to build formset.
+        """
         return ModuleFormSet(instance=self.course,
                              data=data)
 
