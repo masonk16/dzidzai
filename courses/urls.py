@@ -14,9 +14,12 @@ urlpatterns = [
          name='course_delete'),
     path('<pk>/module', views.CourseModuleUpdateView.as_view(),
          name='course_module_update'),
+    # create new text, video, image, or file objects and add them to a
+    # module.
     path('module/<int:module_id>/content/<model_name>/create/',
          views.ContentCreateUpdateView.as_view(),
          name='module_content_create'),
+    # To update an existing text, video, image, or file object.
     path('module/<int:module_id>/content/<model_name>/<id>/',
          views.ContentCreateUpdateView.as_view(),
          name='module_content_update'),
