@@ -113,18 +113,33 @@ class CourseModuleUpdateView(TemplateResponseMixin, View):
 
 
 class ContentCreateUpdateView(TemplateResponseMixin, View):
+    """
+    Generic view to create and update different
+    models’ contents.
+    """
     module = None
     model = None
     obj = None
     template_name = 'courses/manage/content/form.html'
 
     def get_model(self, model_name):
+        """
+        Check that the given model name is one of the four
+        content models: Text, Video, Image, or File.
+        Django’s apps module to obtain the actual class for
+        the given model name. If the given model name is not
+        one of the valid ones, you return None.
+        """
         if model_name in ['text', 'video', 'image', 'file']:
             return apps.get_model(app_label='courses',
                                   model_name=model_name)
         return None
 
     def get_form(self, model, *args, **kwargs):
+        """
+        Build a dynamic form using the modelform_factory()
+        function of the form’s framework.
+        """
         Form = modelform_factory(model, exclude=['owner',
                                                  'order',
                                                  'created',
@@ -132,6 +147,17 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
         return Form(*args, **kwargs)
 
     def dispatch(self, request, module_id, model_name, id=None):
+        """
+        Stores the corresponding module,model, and content
+        object as class attributes.
+        :param request:
+        :param module_id: The ID for the module that the content
+            is/will be associated with.
+        :param model_name: The model name of the content
+            to create/update.
+        :param id: The ID of the object that is being updated.
+            It’s None to create new objects.
+        """
         self.module = get_object_or_404(Module, id=module_id,
                                         course__owner=request.user)
         self.model = self.get_model(model_name)
