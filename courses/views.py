@@ -141,11 +141,11 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
         Build a dynamic form using the modelform_factory()
         function of the form’s framework.
         """
-        Form = modelform_factory(model, exclude=['owner',
+        form = modelform_factory(model, exclude=['owner',
                                                  'order',
                                                  'created',
                                                  'updated'])
-        return Form(*args, **kwargs)
+        return form(*args, **kwargs)
 
     def dispatch(self, request, module_id, model_name, id=None):
         """
@@ -185,7 +185,7 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
                 # new content
                 Content.objects.create(module=self.module,
                                        item=obj)
-            return redirect('courses:course_module_update',
+            return redirect('courses:module_content_list',
                             self.module.id)
         return self.render_to_response({'form': form,
                                         'object': self.obj})
