@@ -185,3 +185,5 @@ REST_FRAMEWORK = {
     ]
 }
 
+ASGI_APPLICATION = 'dzidzai.routing.application'
+
