@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'courses.apps.CoursesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -185,5 +186,5 @@ REST_FRAMEWORK = {
     ]
 }
 
-ASGI_APPLICATION = 'dzidzai.routing.application'
+ASGI_APPLICATION = 'dzidzai.asgi.application'
 
