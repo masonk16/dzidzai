@@ -188,6 +188,7 @@ REST_FRAMEWORK = {
 
 ASGI_APPLICATION = 'dzidzai.asgi.application'
 
+# Redis channel layer
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
