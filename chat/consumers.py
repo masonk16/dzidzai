@@ -29,7 +29,10 @@ class ChatConsumer(WebsocketConsumer):
         Pass is used because there is no need to implement
          any action when a client closes the connection.
         """
-        pass
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name,
+            self.channel_name
+        )
 
     # receive message from WebSocket
     def receive(self, text_data):
