@@ -1,5 +1,6 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
+from asgiref.sync import async_to_sync
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -10,6 +11,15 @@ class ChatConsumer(WebsocketConsumer):
 
     def connect(self):
         """Called when a new connection is received."""
+        self.id = self.scope['url_route']['kwargs']['course_id']
+        self.room_group_name = f'chat_{self.id}'
+
+        # join room group
+        async_to_sync(self.channel_layer.group_add)(
+            self.room_group_name,
+            self.channel_name
+        )
+
         # accept connection
         self.accept()
 
